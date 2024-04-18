@@ -32,7 +32,6 @@ const state = {
     cartTotal: state => state.cartItems.reduce((total, item) => total + item.price, 0),
   };
   
-  // Export the module
   export default {
     state,
     mutations,

@@ -34,6 +34,5 @@
   </script>
   
   <style scoped>
-  /* Add your cart styles here */
   </style>
   

@@ -47,7 +47,7 @@ export default {
 
 <style scoped>
 .login-container {
-  background-color: #4CAF50; /* Green background */
+  background-color: #4CAF50; 
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -55,7 +55,7 @@ export default {
 }
 
 .login-box {
-  background-color: #fff; /* White box */
+  background-color: #fff; 
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
