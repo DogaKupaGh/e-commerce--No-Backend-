@@ -54,6 +54,8 @@ export default {
         return;
       }
       console.log('Registering with:', this.fullname, this.email, this.phone, this.username, this.password);
+      alert('Registration succesfull. Due to fake API, you wont be able to use this account for logging. Please use one of the default options');
+
     },
     validateEmail() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -110,7 +112,6 @@ export default {
 
 <style scoped>
 .registration-container {
-  background-color: #4CAF50; 
   height: 100vh;
   display: flex;
   justify-content: center;

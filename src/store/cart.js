@@ -1,17 +1,19 @@
-
 const state = {
-  cartItems: []
+  cartItems: JSON.parse(localStorage.getItem('cartItems')) || []
 };
 
 const mutations = {
   addToCart(state, product) {
     state.cartItems.push(product);
+    localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
   },
   removeFromCart(state, productId) {
     state.cartItems = state.cartItems.filter(item => item.id !== productId);
+    localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
   },
   clearCart(state) {
     state.cartItems = [];
+    localStorage.removeItem('cartItems');
   }
 };
 

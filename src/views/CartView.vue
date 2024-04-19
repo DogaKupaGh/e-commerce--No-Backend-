@@ -2,22 +2,40 @@
   <div>
     <NavbarHeader />
     <div class="container mt-5">
-      <div class="cart">
-        <h1>Your Cart</h1>
-        <div v-if="cartItems.length === 0">
-          <p>Your cart is empty.</p>
-        </div>
-        <div v-else>
-          <div v-for="item in cartItems" :key="item.id" class="cart-item">
-            <img :src="item.image" :alt="item.title" class="cart-item-image" />
-            <div class="cart-item-details">
-              <h3>{{ item.title }}</h3>
-              <p>Price: {{ item.price }} TL</p>
-              <button @click="removeFromCart(item.id)">Remove</button>
-            </div>
+      <div class="card">
+        <h1 class="card-header">Your Cart</h1>
+        <div class="card-body">
+          <div v-if="cartItems.length === 0">
+            <p class="card-text">Your cart is empty.</p>
           </div>
-          <div>
-            <button @click="clearCart" class="clear-cart">Clear Cart</button>
+          <div v-else>
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+              <div v-for="item in cartItems" :key="item.id" class="col">
+                <div class="card">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img :src="item.image" :alt="item.title" class="img-fluid rounded-start" />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ item.title }}</h5>
+                        <p class="card-text">Price: {{ item.price }} TL</p>
+                        <button @click="removeFromCart(item.id)" class="btn btn-danger btn-sm">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div>
+                <button @click="clearCart" class="btn btn-secondary">Clear Cart</button>
+              </div>
+              <div>
+                <p class="fw-bold mb-0">Total: {{ totalPrice }} TL</p>
+                <button @click="pay" class="btn btn-primary mt-2">Pay Now</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -36,74 +54,20 @@ export default {
   computed: {
     ...mapState({
       cartItems: state => state.cart.cartItems
-    })
+    }),
+    totalPrice() {
+      return this.cartItems.reduce((total, item) => total + item.price, 0);
+    }
   },
   methods: {
-    ...mapActions(['removeFromCart', 'clearCart'])
-  }
+    ...mapActions(['removeFromCart', 'clearCart']),
+    pay() {
+      alert('Payment successful!');
+      this.clearCart();
+    }
+  },
 };
 </script>
 
 <style scoped>
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.cart {
-  margin-top: 50px;
-}
-
-.cart h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.cart-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
-.cart-item img {
-  width: 100px;
-  height: auto;
-  margin-right: 20px;
-}
-
-.cart-item-details h3 {
-  font-size: 18px;
-  margin: 0;
-}
-
-.cart-item-details p {
-  font-size: 16px;
-  margin: 5px 0;
-}
-
-.cart-item button {
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.cart-item button:hover {
-  background-color: #c82333;
-}
-
-.clear-cart {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 20px;
-}
-
-.clear-cart:hover {
-  background-color: #0056b3;
-}
 </style>

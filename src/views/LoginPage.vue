@@ -33,21 +33,39 @@ export default {
   },
   methods: {
     login() {
-      // Backend olduğu durumda burada verilere giriş yapılacaktı. 
-      if (this.username === 'admin' && this.password === 'sifre') {
-        this.$router.push('/home');
-        console.log('Logging in with:', this.username, this.password, 'Remember Me:', this.rememberMe);
-      } else {
-        alert('Incorrect username or password');
-      }
+      fetch('https://fakestoreapi.com/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.token) {
+          console.log('Login successful. Token:', data.token);
+          this.$store.dispatch('auth/login'); 
+          this.$router.push('/home');
+        } else {
+          console.error('Login failed:', data.error);
+          alert('Incorrect username or password');
+        }
+      })
+      .catch(error => {
+        console.error('Error logging in:', error);
+        alert('Wrong Password and Username, please try again');
+      });
     }
   }
 };
+
 </script>
 
 <style scoped>
 .login-container {
-  background-color: #4CAF50; 
   height: 100vh;
   display: flex;
   justify-content: center;
