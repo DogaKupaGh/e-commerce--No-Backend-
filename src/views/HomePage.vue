@@ -11,7 +11,8 @@
               class="list-group-item"
               v-for="category in categories"
               :key="category.id"
-              @click="filterItemsByCategory(category.name)"
+              :class="{ 'active-category': category.name === selectedCategory }"
+              @click="selectCategory(category.name)"
             >
               {{ category.name }}
             </li>
@@ -42,13 +43,14 @@ export default {
     NavbarHeader
   },
   computed: {
-    ...mapState(["cartItems"])
+    ...mapState('cart', ['cartItems'])
   },
   data() {
     return {
       items: [],
       categories: [],
-      filteredItems: []
+      filteredItems: [],
+      selectedCategory: "All" // Default selected category
     };
   },
   async mounted() {
@@ -77,7 +79,8 @@ export default {
         console.error("Error fetching categories:", error);
       }
     },
-    filterItemsByCategory(categoryName) {
+    selectCategory(categoryName) {
+      this.selectedCategory = categoryName;
       if (categoryName === "All") {
         this.filteredItems = this.items;
       } else {
@@ -91,4 +94,8 @@ export default {
 </script>
 
 <style scoped>
+.active-category {
+  background-color: lightgreen;
+}
 </style>
+
